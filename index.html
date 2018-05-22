@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Draggable test 2</title>
+
+  <style>
+  .add {
+    height: 30px !important;
+    text-align: center;
+    padding-top: 4px;
+    color: #fff;
+    font-size: 0.9em;
+    cursor: move;
+    text-transform: capitalize;
+    line-height: 1.8;
+  }
+  .pool {
+    background: #199ED8 !important;
+    width: 100px;
+  }
+  .lunch {
+    background: #797979 !important;
+    width: 100px;
+  }
+  .skill {
+    background: #FFCC00 !important;
+    width: 100px;
+  }
+  .project {
+    background: #00CCCC !important;
+    width: 100px;
+  }
+
+  .meeting {
+    background: #3D315B;
+    width: 100px;
+  }
+
+  .goalie {
+    background: #C6878F;
+    width: 100px;
+  }
+
+  .add-wrap {
+    width: 350px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+
+  .target {
+    min-height: 34px;
+    width: 800px;
+    margin: 20px auto 0;
+    background: #cccccc;
+  }
+
+  .destroy {
+    background: lightyellow;
+    width: 80%;
+    margin: 0 auto;
+    padding: 50px;
+    margin-top: 50px;
+    text-align: center;
+    color: #ccc;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+    margin: 0 auto;
+}
+
+  .hour {
+    border-right: 1px solid #ccc;
+    width: 100px;
+    height: 20px;
+    position: relative;
+    color: #ccc;
+    font-size: 1.1em;
+  }
+
+  .hour:first-child {
+    border-left: 1px solid #ccc;
+  }
+
+  .half {
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    color: #ccc;
+    font-size: 0.7em
+  }
+
+  .sync {
+    margin-top: -12px;
+    margin-left: 10px;
+    padding: 5px 5px 0 5px;
+    height: 30px;
+  }
+
+  .sync:hover {
+    background: #c0c0c0;
+  }
+
+  .sync img {
+    width: 25px;
+  }
+
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<body>
+<script>
+
+var startTime = 10;
+
+var draggableOptions = {
+      snap: ".target, .clone",
+      snapTolerance: 15,
+      refreshPositions: true,
+      zIndex: 90,
+      helper: "clone",
+      stop: handleDragStop
+};
+
+var draggableOptionsClones = {
+      snap: ".target, .clone",
+      refreshPositions: true,
+      zIndex: 90
+};
+
+var resizableOptions = {
+      handles: "e, w",
+      grid: [25,0],
+      containment: ".target"
+};
+
+$(function() {
+            $( ".add" ).draggable(draggableOptions);
+          });
+
+$(function() {
+            $( ".add" ).resizable(resizableOptions);
+         });
+
+$(function() {
+            $( ".target" ).droppable();
+          });
+
+$(function() {
+             $( ".destroy" ).droppable({
+               drop: function( event, ui ) {
+                ui.draggable.remove();
+               },
+               accept: ".clone"
+             });
+           });
+
+function handleDragStop( event, ui ) {
+    var offsetXPos = parseInt( ui.offset.left );
+    var offsetYPos = parseInt( ui.offset.top );
+    var type = $(this).attr('class').split(' ')[1];
+    $(".target").append("<div id='" + type + "' class='add " + type + " clone' style='position: absolute; top: " + offsetYPos + "px; left: " + offsetXPos + "px; z-index: 900;'>+" + type + "</div>");
+    $( ".clone" ).draggable(draggableOptionsClones);
+    $( ".clone" ).resizable(resizableOptions);
+}
+
+function getBlockTotals(){
+  var poolTotal = 0;
+  $('#pool').each(function() {
+    poolTotal += ($(this).width())/100;
+  $('.pool-hours > .total').html(poolTotal);
+    return poolTotal;
+});
+var projectTotal = 0;
+$('#project').each(function() {
+  projectTotal += ($(this).width())/100;
+$('.project-hours > .total').html(projectTotal);
+  return projectTotal;
+});
+
+var skillTotal = 0;
+$('#skill').each(function() {
+  skillTotal += ($(this).width())/100;
+$('.skill-hours > .total').html(skillTotal);
+  return skillTotal;
+});
+
+var meetingTotal = 0;
+$('#meeting').each(function() {
+  meetingTotal += ($(this).width())/100;
+$('.meeting-hours > .total').html(meetingTotal);
+  return meetingTotal;
+});
+
+var goalieTotal = 0;
+$('#goalie').each(function() {
+  goalieTotal += ($(this).width())/100;
+$('.goalie-hours > .total').html(goalieTotal);
+  return goalieTotal;
+});
+$('.clone').each(function(){
+  var type = $(this).attr('class').split(' ')[1];
+  var startPos = $(this).position().left;
+  var start = '"' + ((startPos-171)/100+startTime) + '"';
+  var length = ($(this).width())/100;
+  var end = '"' + (((startPos-171)/100+startTime)+length) + '"';
+  var minutes = start.split('.')[1];
+      if (minutes != undefined){
+        var minutes = (parseInt(minutes))/100*60 + '"';
+        var startHour = start.split('.')[0];
+        var start = startHour + ':' + minutes;
+      }
+  var minutes = end.split('.')[1];
+          if (minutes != undefined){
+            var minutes = (parseInt(minutes))/100*60 + '"';
+            var endHour = end.split('.')[0];
+            var end = endHour + ':' + minutes;
+          }
+  var start = start.replace(/["]+/g, "");
+  var end = end.replace(/["]+/g, "");
+
+  $('.schedule').append('<p class="times">' + type + ': ' + start + '-' + end + '</p>');
+});
+}
+
+
+</script>
+
+<div class="add-wrap">
+
+  <div class="add pool">+Pool</div>
+  <div class="add lunch">+Lunch</div>
+  <div class="add project">+Project</div>
+  <div class="add skill">+Skill</div>
+  <div class="add meeting">+Meeting</div>
+  <div class="add goalie">+Goalie</div>
+
+  <div class="sync"><img src="img/sync.svg"></div>
+
+</div>
+
+<div class="target"></div>
+<div class="timeline">
+  <div class="hour"><span class='half'>|</span></div>
+  <div class="hour"><span class='half'>|</span></div>
+  <div class="hour"><span class='half'>|</span></div>
+  <div class="hour"><span class='half'>|</span></div>
+  <div class="hour"><span class='half'>|</span></div>
+  <div class="hour"><span class='half'>|</span></div>
+  <div class="hour"><span class='half'>|</span></div>
+  <div class="hour"><span class='half'>|</span></div>
+</div>
+
+<div class="destroy">Drop blocks here to delete</div>
+
+<div class="totals">
+  <div class="pool-hours">
+    <span class="type">Pool:</span><span class="total"></span>
+  </div>
+  <div class="meeting-hours">
+    <span class="type">Meeting:</span><span class="total"></span>
+  </div>
+  <div class="lunch-hours">
+    <span class="type">Lunch:</span><span class="total"> 1</span>
+  </div>
+  <div class="project-hours">
+    <span class="type">Project:</span><span class="total"></span>
+  </div>
+  <div class="skill-hours">
+    <span class="type">Skill:</span><span class="total"></span>
+  </div>
+  <div class="goalie-hours">
+    <span class="type">Goalie:</span><span class="total"></span>
+  </div>
+</div>
+
+<div class="schedule"></div>
+
+<script>
+$(".hour:first-child").html("<span class='time'>&nbsp;" + startTime + ":00</span><span class='half'>|</span>");
+$(".sync").click(getBlockTotals);
+</script>
+
+</body>
+</html>
