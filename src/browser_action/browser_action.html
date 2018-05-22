@@ -1,10 +1,15 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Draggable test 2</title>
+<style type="text/css">
+	#mainPopup {
+		padding: 10px;
+		height: 400px;
+		width: 1000px;
+		font-family: Helvetica, Ubuntu, Arial, sans-serif;
+	}
+	h1 {
+		font-size: 2em;
+	}
 
-  <style>
   .add {
     height: 30px !important;
     text-align: center;
@@ -53,7 +58,7 @@
   .target {
     min-height: 34px;
     width: 800px;
-    margin: 20px 0 0 -8px;
+    margin: 20px 0 0;
     background: #cccccc;
   }
 
@@ -71,7 +76,6 @@
     display: flex;
     flex-direction: row;
     width: 800px;
-    margin-left: -8px;
 }
 
   .hour {
@@ -111,11 +115,11 @@
   }
 
   </style>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<body>
+<div id="mainPopup">
 <script>
 
 var startTime = 10;
@@ -125,7 +129,7 @@ var draggableOptions = {
       snapTolerance: 15,
       refreshPositions: true,
       zIndex: 90,
-      grid: [25, 25],
+			grid: [ 25, 0 ],
       helper: "clone",
       stop: handleDragStop
 };
@@ -134,7 +138,7 @@ var draggableOptionsClones = {
       snap: ".target, .clone",
       refreshPositions: true,
       zIndex: 90,
-      grid: [25, 25]
+			grid: [ 25, 0 ]
 };
 
 var resizableOptions = {
@@ -212,7 +216,7 @@ $('.clone').each(function(){
   var startPos = $(this).position().left;
   var start = '"' + (startPos/100+startTime) + '"';
   var length = ($(this).width())/100;
-  var end = '"' + ((startPos/100+startTime)+length) + '"';
+  var end = '"' + (((startPos-171)/100+startTime)+length) + '"';
   var minutes = start.split('.')[1];
       if (minutes != undefined){
         var minutes = (parseInt(minutes))/100*60 + '"';
@@ -228,7 +232,7 @@ $('.clone').each(function(){
   var start = start.replace(/["]+/g, "");
   var end = end.replace(/["]+/g, "");
 
-  $('.schedule').append('<p class="times">' + type + ': ' + start + '-' + end + '</p>');
+//  $('.schedule').append('<p class="times">' + type + ': ' + start + '-' + end + '</p>');
 });
 }
 
