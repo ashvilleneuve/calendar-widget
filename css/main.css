@@ -1,0 +1,104 @@
+.add {
+  height: 30px !important;
+  text-align: center;
+  padding-top: 4px;
+  color: #fff;
+  font-size: 0.9em;
+  cursor: move;
+  text-transform: capitalize;
+  line-height: 1.8;
+}
+.pool {
+  background: #199ED8 !important;
+  width: 100px;
+}
+.lunch {
+  background: #797979 !important;
+  width: 100px;
+}
+.skill {
+  background: #FFCC00 !important;
+  width: 100px;
+}
+.project {
+  background: #00CCCC !important;
+  width: 100px;
+}
+
+.meeting {
+  background: #3D315B;
+  width: 100px;
+}
+
+.goalie {
+  background: #C6878F;
+  width: 100px;
+}
+
+.add-wrap {
+  width: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.target {
+  min-height: 34px;
+  width: 800px;
+  margin: 20px 0 0 -8px;
+  background: #cccccc;
+}
+
+.destroy {
+  background: lightyellow;
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  margin-top: 50px;
+  text-align: center;
+  color: #ccc;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  margin-left: -8px;
+}
+
+.hour {
+  border-right: 1px solid #ccc;
+  width: 100px;
+  height: 20px;
+  position: relative;
+  color: #ccc;
+  font-size: 1.1em;
+}
+
+.hour:first-child {
+  border-left: 1px solid #ccc;
+}
+
+.half {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  color: #ccc;
+  font-size: 0.7em
+}
+
+.sync {
+  margin-top: -12px;
+  margin-left: 10px;
+  padding: 5px 5px 0 5px;
+  height: 30px;
+}
+
+.sync:hover {
+  background: #c0c0c0;
+}
+
+.sync img {
+  width: 25px;
+}
