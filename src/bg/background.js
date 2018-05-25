@@ -134,12 +134,15 @@ $(function() {
       }, 1000);
   });
 
+function resetStage(){
+  $('.target').html('');
+}
 
 
 $(function() {
   $(".hour:first-child").html("<span class='time'>&nbsp;" + startTime + ":00</span><span class='half'>|</span>");
   $(".sync").click(getBlockTotals);
-//  $(".save").click(saveSpots);
+  $(".reset").click(resetStage);
 
            });
 
